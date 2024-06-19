@@ -13,9 +13,11 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(express.static(__dirname + '/public'));
 
-app.use(session({
+app.use('/', require('./src/routes/WebBarberRoutes'));
 
-}))
+//app.use(session({
+
+//}))
 
 db.sync(() => console.log('Banco de dados conectado.'));
 
