@@ -13,11 +13,15 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(express.static(__dirname + '/public'));
 
-app.use('/', require('./src/routes/WebBarberRoutes'));
+app.use('/', require('./src/routes/wbRoutes'));
+app.use('/', require('./src/routes/wbAutenticacao'));
 
-//app.use(session({
-
-//}))
+app.use(session({
+    secret: 'secret-token',
+    name: 'sessionId',
+    resave: false,
+    saveUninitialized: false
+}))
 
 db.sync(() => console.log('Banco de dados conectado.'));
 

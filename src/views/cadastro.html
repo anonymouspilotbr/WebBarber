@@ -18,8 +18,8 @@
             border-radius: 10px;
             padding-left: 10px;
             padding-right: 10px;
-            padding-bottom: 20px;
-            height: 570px;
+            padding-bottom: 40px;
+            height: auto;
         }
         div.offset-4{
             margin-left: 25%;
@@ -32,6 +32,11 @@
 <body>
     <div class="container">
         <div class="row">
+            {{#erro}}
+            <div class="alert alert-danger">
+              Erro ao cadastrar usuário!
+            </div>
+            {{/erro}}
             <div class="col-12 text-center">
                 <h1 class=" mt-5"> Criar uma conta </h1>
             </div>
