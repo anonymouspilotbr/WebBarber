@@ -10,6 +10,14 @@ function homeView(req, res){
     res.render('index.html');
 }
 
+function homeViewTime(req, res){
+    res.render('index_time.html');
+}
+
+function perfilView(req, res){
+    res.render('perfil.html');
+}
+
 const Usuario = require('../models/usuario');
 
 function cadastrarUsuario(req, res) {
@@ -35,5 +43,7 @@ module.exports = {
     loginView,
     cadastroView,
     cadastrarUsuario,
-    homeView
+    homeView,
+    homeViewTime,
+    perfilView
 }

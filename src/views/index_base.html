@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Local Schedule and Team</title>
+	<style>
+		
+		.horizontal-select {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-top: 20px;
+		}
+		.horizontal-select button {
+			flex: 1;
+			margin-right: 20px;
+			padding: 10px;
+			border: none;
+			border-radius: 5px;
+			background-color: #f2f2f2;
+			color: #333;
+			font-size: 16px;
+			cursor: pointer;
+		}
+		.horizontal-select button.active {
+			background-color: #ddd;
+		}
+		
+		.section {
+			border: 1px solid #ccc;
+		padding: 20px;
+			margin-bottom: 20px;
+		}
+		
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<div class="section">
+		<div class="header">
+			<a href="#">My Account</a>
+		</div>
+	</div>
+	<div class="section">
+	<h2>Select a Service</h2>
+		<div class="service-options horizontal-select">
+			<button class="service-option active" data-value="Service 1">Service 1</button>
+			<button class="service-option" data-value="Service 2">Service 2</button>
+			<button class="service-option" data-value="Service 3">Service 3</button>
+			<button class="service-option" data-value="Service 4">Service 4</button>
+			<button class="service-option" data-value="Service 5">Service 5</button>
+		</div>
+	</div>
+	<div class="section">
+		<h2>Select a Time</h2>
+		<div class="time-options horizontal-select">
+			<button class="time-option active" data-value="9:00 AM">9:00 AM</button>
+			<button class="time-option" data-value="10:00 AM">10:00 AM</button>
+			<button class="time-option" data-value="11:00 AM">11:00 AM</button>
+		<button class="time-option" data-value="12:00 PM">12:00 PM</button>
+			<button class="time-option" data-value="1:00 PM">1:00 PM</button>
+			<button class="time-option" data-value="2:00 PM">2:00 PM</button>
+			<button class="time-option" data-value="3:00 PM">3:00 PM</button>
+			<button class="time-option" data-value="4:00 PM">4:00 PM</button>
+			<button class="time-option" data-value="5:00 PM">5:00 PM</button>
+		</div>
+	</div>
+	<div class="section">
+		<h2>Our Team</h2>
+		<ul>
+			<li>
+				<img src="https://via.placeholder.com/50" alt="Team Member 1">
+				<input type="radio" id="team-member-1" name="team-member" value="Team Member 1">
+				<label for="team-member-1">John Doe</label>
+			</li>
+			<li>
+				<img src="https://via.placeholder.com/50" alt="Team Member 2">
+				<input type="radio" id="team-member-2" name="team-member" value="Team Member 2">
+				<label for="team-member-2">Jane Doe</label>
+			</li>
+			<li>
+				<img src="https://via.placeholder.com/50" alt="Team Member 3">
+				<input type="radio" id="team-member-3" name="team-member" value="Team Member 3">
+				<label for="team-member-3">Bob Smith</label>
+			</li>
+		</ul>
+	</div>
+	<div class="section">
+		<div class="confirm">
+			<button class="confirm-button" onclick="confirmSelection()">Confirm Selection</button>
+		</div>
+	</div>
+
+	<script>
+		// Armazenar as seleções atuais de serviço e horário em variáveis JavaScript
+		var currentService =$('.service-option.active').data('value');
+		var currentTime = $('.time-option.active').data('value');
+
+		// Adicionar um manipulador de eventos para o clique no membro da equipe que atualiza as seleções atuais de serviço e horário
+		$('input[name="team-member"]').click(function() {
+			// Atualizar as seleções atuais de serviço e horário
+			//currentService = $('.service-option.active').data('value');
+			//currentTime = $('.time-option.active').data('value');
+
+			// Selecionar o serviço e o horário atuais
+			$('.service-option[data-value="' + currentService + '"]').addClass('active');
+			$('.time-option[data-value="' + currentTime + '"]').addClass('active');
+		});
+
+		function confirmSelection() {
+			var service = currentService;
+			var time = currentTime;
+			var teamMember = $('input[name="team-member"]:checked').val();
+			alert("You have selected " + service + " at " + time + " with " + teamMember);
+		}
+
+		$(document).click(function(e) {
+			// Se o clique não foi feito em um botão de horário ou serviço, não desmarcamos os botões selecionados
+			if (!$(e.target).closest('.service-option, .time-option').length) {
+				$('.service-option, .time-option').removeClass('active');
+			}
+		});
+
+		$('.service-option, .time-option').click(function(e) {
+			e.stopPropagation();
+			$(this).siblings().removeClass('active');
+			$(this).addClass('active');
+
+			// Atualizar as seleções atuais de serviço e horário
+			currentService = $(this).data('value');
+			currentTime = $('.time-option.active').data('value');
+		});
+
+		$('input[name="team-member"]').click(function(e) {
+			e.stopPropagation();
+		});
+	</script>
+</body>
+</html>
