@@ -12,56 +12,148 @@
 <nav>
     <div class="header">
         <h1>WEBBARBER</h1>
-        <a href="#">My Account</a>
+        <a href="perfil">Minha Conta</a>
     </div>
 </nav>
 <body>
     <div id="master">
         <div class="section">
         <h1>Barbearia Fulano de Tal</h1>
-        <h2>Selecione um serviço:</h2>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Corte de cabelo</div>
-                &#128338; 15 - 25 min
-                A partir de R$ 15,00
-              </div>
-              <input class="btn btn-primary" type="button" value="Reservar">
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Barba</div>
-                &#128338; 10 - 15 min
-                A partir de R$ 15,00
-              </div>
-              <input class="btn btn-primary" type="button" value="Reservar">
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Cabelo + Barba</div>
-                &#128338; 25 - 40 min
-                A partir de R$ 30,00
-              </div>
-              <input class="btn btn-primary" type="button" value="Reservar">
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div id="servicos">
+          <h2>Selecione um serviço:</h2>
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
-                  <div class="fw-bold">Cabelo + Sobrancelha</div>
-                  &#128338; 30 - 45 min
-                A partir de R$ 35,00
+                  <div class="fw-bold">Corte de cabelo</div>
+                  &#128338; 15 - 25 min
+                  A partir de R$ 15,00
                 </div>
-                <input class="btn btn-primary" type="button" value="Reservar">
+                <input class="btn btn-primary" type="button" value="Reservar" onclick=reservar1()>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
-                  <div class="fw-bold">Platina</div>
-                  &#128338; 45 - 60 min
-                A partir de R$ 40,00
+                  <div class="fw-bold">Barba</div>
+                  &#128338; 10 - 15 min
+                  A partir de R$ 15,00
                 </div>
-                <input class="btn btn-primary" type="button" value="Reservar">
+                <input class="btn btn-primary" type="button" value="Reservar" onclick=reservar2()>
               </li>
-          </ul>
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">Cabelo + Barba</div>
+                  &#128338; 25 - 40 min
+                  A partir de R$ 30,00
+                </div>
+                <input class="btn btn-primary" type="button" value="Reservar" onclick=reservar3()>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">Cabelo + Sobrancelha</div>
+                    &#128338; 30 - 45 min
+                  A partir de R$ 35,00
+                  </div>
+                  <input class="btn btn-primary" type="button" value="Reservar" onclick=reservar4()>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">Platinar</div>
+                    &#128338; 45 - 60 min
+                  A partir de R$ 40,00
+                  </div>
+                  <input class="btn btn-primary" type="button" value="Reservar" onclick=reservar5()>
+                </li>
+            </ul>
+        </div>
 </body>
+<script>
+    function reservar_geral(servico){
+      console.log('reservar_geral called with servico:', servico);
+      const formHTML = `
+        <div class="section">
+          <h2>Serviço selecionado: ${servico}</h2>
+          <h2>Escolha um profissional:</h2>
+          <form id="agendar-form" action="/agendar" method="post">
+          <div class="professionals-container">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="prof1">
+            <label class="form-check-label" for="flexRadioDefault1">
+                Carlos Massa
+            </label>  
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="prof2">
+            <label class="form-check-label" for="flexRadioDefault2">
+                Luis Carlos Alborghetti
+            </label> 
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="prof3">
+            <label class="form-check-label" for="flexRadioDefault3">
+                Silvio Santos
+            </label>   
+            </div>
+        </div>
+        <div class="section">
+          <h2>Selecione um horário:</h2>
+          <div class="time-options horizontal-select">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="horario1">
+            <label class="form-check-label" for="flexRadioDefault1">09h00</label>
+
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="horario2">
+            <label class="form-check-label" for="flexRadioDefault2">09h30</label>
+
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="horario3">
+            <label class="form-check-label" for="flexRadioDefault3">10h00</label>
+
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="horario4">
+            <label class="form-check-label" for="flexRadioDefault3">11h00</label> 
+
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="horario5">
+            <label class="form-check-label" for="flexRadioDefault3">12h15</label>  
+
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="horario6">
+            <label class="form-check-label" for="flexRadioDefault3">13h30</label>  
+
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="horario7">
+            <label class="form-check-label" for="flexRadioDefault3">15h00</label>  
+
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="horario8">
+            <label class="form-check-label" for="flexRadioDefault3">16h30</label>  
+
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 mt-3">Reservar</button>
+      </form>
+      `;
+
+      document.getElementById('servicos').innerHTML = formHTML;
+
+      const form = document.getElementById('agendar-form');
+      form.addEventListener('submit', (e) => {
+        const formData = new FormData(form);
+        console.log('Form data:', formData);
+      });
+    }
+
+    function reservar1(){
+      let servico = 'Corte';
+      reservar_geral(servico);
+    }
+
+    function reservar2(){
+      let servico = 'Barba';
+      reservar_geral(servico);
+    }
+
+    function reservar3(){
+      let servico = 'Corte + Barba';
+      reservar_geral(servico);
+    }
+
+    function reservar4(){
+      let servico = 'Corte + Sobrancelha';
+      reservar_geral(servico);
+    }
+
+    function reservar5(){
+      let servico = 'Platinar';
+      reservar_geral(servico);
+    }
+</script>
 </html>

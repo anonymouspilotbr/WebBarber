@@ -12,12 +12,99 @@
 <nav>
     <div class="header">
         <h1><a href="home" id="logo">WEBBARBER</a></h1>
-        <a href="perfil">My Account</a>
+        <form action="/sair" method="post">
+            <input class="btn btn-primary" type="submit" value="Sair">
+        </form>
     </div>
 </nav>
 <body>
     <div id="master">
         <div class="section">
         <h1>Minha Conta</h1>
+        </div>
+        <div id="master_inner">
+            <div class="section">
+                <div class="profile-info">
+                    <h2>Informações do Usuário</h2>
+                    <p><strong>Nome:</strong> {{nome}}</p>
+                    <p><strong>Email:</strong> {{email}}</p>
+                    <input class="btn btn-primary" type="button" value="Alterar dados" onclick=alterarDados()>
+                </div>
+                <div id="form-container"></div>
+            </div>
+            <div class="section">
+                <h2>Horários Marcados</h2>
+                <ul class="appointments">
+                    <li>
+                        <div>
+                            <strong>Serviço:</strong> Corte de Cabelo<br>
+                            <strong>Data:</strong> <span class="date">2024-06-25</span><br>
+                            <strong>Horário:</strong> 10:00 AM<br>
+                            <strong>Profissional:</strong> João Barber<br>
+                            <span class="status" id="status-1">Agendado</span>
+                        </div>
+                        <button class="btn-cancel" onclick="cancelAppointment(this)">Cancelar</button>
+                    </li>
+                    <li>
+                        <div>
+                            <strong>Serviço:</strong> Barba<br>
+                            <strong>Data:</strong> <span class="date">2024-06-28</span><br>
+                            <strong>Horário:</strong> 2:00 PM<br>
+                            <strong>Profissional:</strong> Maria Barber<br>
+                            <span class="status" id="status-2">Agendado</span>
+                        </div>
+                        <button class="btn-cancel" onclick="cancelAppointment(this)">Cancelar</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
+    <script>
+        function alterarDados(){
+            const formContainer = document.getElementById('form-container');
+            formContainer.innerHTML = `
+            <form action="alterar_dados" method="post">
+                <h2>Informações do Usuário</h2>
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" class="form-control" id="nome" name="nome">
+                <label for="email" class="form-label">E-mail:</label>
+                <input type="text" class="form-control" id="email" name="email">
+                <label for="senha" class="form-label">Senha:</label>
+                <input type="password" class="form-control" id="senha" name="senha">
+                <button type="submit" class="btn btn-primary w-100 mt-3">Alterar dados</button>
+            </form>
+            `;  
+        }
+        function cancelAppointment(button) {
+            // Remove o elemento pai do botão (o <li> que contém o horário marcado)
+            const li = button.parentElement;
+            li.remove();
+            // Aqui você pode adicionar uma chamada de API para remover o horário marcado do banco de dados
+            alert('Horário cancelado com sucesso.');
+        }
+
+        // Função para verificar o status dos horários
+        function checkAppointmentsStatus() {
+            const today = new Date().toISOString().split('T')[0]; // Data de hoje no formato YYYY-MM-DD
+            const appointments = document.querySelectorAll('.appointments li');
+
+            appointments.forEach((appointment, index) => {
+                const dateElement = appointment.querySelector('.date');
+                const date = dateElement.textContent;
+                const statusElement = appointment.querySelector('.status');
+
+                if (date < today) {
+                    statusElement.textContent = 'Finalizado';
+                    statusElement.classList.add('finalizado');
+                    appointment.querySelector('.btn-cancel').style.display = 'none';
+                } else {
+                    statusElement.textContent = 'Agendado';
+                }
+            });
+        }
+
+        // Verificar o status dos horários ao carregar a página
+        document.addEventListener('DOMContentLoaded', checkAppointmentsStatus);
+    </script>
 </html>

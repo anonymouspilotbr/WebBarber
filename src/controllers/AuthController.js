@@ -1,6 +1,7 @@
 const Usuario = require('../models/usuario');
 
-async function Autenticar(req, res){
+async function autenticar(req, res){
+    console.log(req.session);
     const usuario = await Usuario.findOne({
         where: {
             email: req.body.email,
@@ -8,9 +9,11 @@ async function Autenticar(req, res){
         }
     });
 
-    if(usuario != null){
+    if(usuario !== null){
         req.session.autorizado = true;
         req.session.usuario = usuario;
+        req.session.nome = usuario.nome;
+        req.session.email = usuario.email;
         res.redirect('/home');
     }else{
         let erro_Auth = true;
@@ -20,6 +23,10 @@ async function Autenticar(req, res){
 
 function homeView(req, res){
     res.render('index.html');
+}
+
+function perfilView(req, res){
+    res.render('perfil.html', { nome: req.session.nome, email: req.session.email });
 }
 
 function sair(req, res){
@@ -39,8 +46,9 @@ function verificarAuth(req, res, next){
 }
 
 module.exports = {
-    Autenticar,
+    autenticar,
     homeView,
     verificarAuth,
+    perfilView,
     sair
 };

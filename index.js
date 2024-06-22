@@ -13,15 +13,16 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(express.static(__dirname + '/public'));
 
+app.use(session({
+    secret: 'abc1234',
+    name: 'sessionId',  
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+}))
+
 app.use('/', require('./src/routes/wbRoutes'));
 app.use('/', require('./src/routes/wbAutenticacao'));
-
-app.use(session({
-    secret: 'secret-token',
-    name: 'sessionId',
-    resave: false,
-    saveUninitialized: false
-}))
 
 db.sync(() => console.log('Banco de dados conectado.'));
 
